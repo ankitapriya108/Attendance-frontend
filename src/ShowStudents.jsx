@@ -83,14 +83,16 @@ function ShowStudents({ updateData }) {
 
 
 
-  const exportToXLS = () => {
+
+
+  const exportToCSV = () => {
     const attendanceData = Object.entries(attendance).map(([id, { name, status }]) => ({ id, name, status }));
-    const worksheet = XLSX.utils.json_to_sheet(attendanceData);
-    const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'attendance.xlsx');
+    const parser = new Parser();
+    const csv = parser.parse(attendanceData);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'attendance.csv');
   };
+
 
 
 
