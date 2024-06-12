@@ -8,6 +8,7 @@ import "./App.css"
 export const attendanceContext = createContext()
 import { v4 as uuid } from 'uuid';
 import DisplayStudents from './DisplayStudents';
+import ExportExcel from './ExportExcel';
 
 
 function App() {
@@ -28,6 +29,7 @@ students,setStudents, faculty,setFaculty
 <StudentForm/>
  <FacultyList/>
 <ShowStudents />
+<ExportExcel/>
 <DisplayStudents/>
 </attendanceContext.Provider>
 
