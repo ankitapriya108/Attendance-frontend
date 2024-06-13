@@ -40,29 +40,45 @@ function FacultyList() {
   //   }
   // }
 
+//......................................//....................................//
+
+  // async function handleDelete(id) {
+  //   try {
+  //     const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
+  //     if (response.status === 200) {
+  //       console.log("Faculty deleted");
+  //       setMessage("Faculty deleted successfully");
+  //       fetchFaculties();
+  //     } else {
+  //       console.log("Failed to delete", response.data);
+  //       setMessage("Failed to delete faculty.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting faculty:", error);
+  //     setMessage("Error deleting faculty.");
+  //   }
+  // }
 
 
-  async function handleDelete(id) {
+
+
+  const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
+      // const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
+      const response = await axios.delete("http://localhost:3000/deleteFaculty:id");
       if (response.status === 200) {
-        console.log("Faculty deleted");
-        setMessage("Faculty deleted successfully");
+        console.log('Faculty deleted');
+        setMessage('Faculty deleted successfully');
         fetchFaculties();
       } else {
-        console.log("Failed to delete", response.data);
-        setMessage("Failed to delete faculty.");
+        console.log('Failed to delete', response.data);
+        setMessage('Failed to delete faculty.');
       }
     } catch (error) {
-      console.error("Error deleting faculty:", error);
-      setMessage("Error deleting faculty.");
+      console.error('Error deleting faculty:', error);
+      setMessage('Error deleting faculty.');
     }
-  }
-
-
-
-
-
+  };
   
 
 

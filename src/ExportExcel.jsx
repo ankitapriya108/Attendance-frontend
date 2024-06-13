@@ -4,26 +4,79 @@ import axios from 'axios';
 const ExportExcel = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [loadingPDF, setLoadingPDF] = useState('');
+    const [error, setError] = useState('');
 
     const handleExport = () => {
         axios.get(`http://localhost:3000/exportAttendance/${startDate}/${endDate}`, {
-            responseType: 'blob' // Tell Axios to expect binary data
+            responseType: 'blob' 
         })
         .then(response => {
-            // Create a temporary anchor element
+           
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'attendance.xlsx'); // Set the filename for download
+            link.setAttribute('download', 'attendance.xlsx'); 
             document.body.appendChild(link);
             link.click();
-            link.parentNode.removeChild(link); // Clean up
+            link.parentNode.removeChild(link); 
         })
         .catch(error => {
             console.error('Error exporting attendance:', error);
-            // Handle error
+           
         });
     };
+
+
+
+    const handleExportJSON = () => {
+        axios.get(`http://localhost:3000/exportAttendanceJSON/${startDate}/${endDate}`)
+            .then(response => {
+                const jsonData = JSON.stringify(response.data);
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'attendance.json'); 
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link); 
+            })
+            .catch(error => {
+                console.error('Error exporting attendance as JSON:', error);
+            });
+    };
+
+
+    
+    const handleExportPDF = async () => {
+        if (!startDate || !endDate) {
+            setError('Please select both start and end dates');
+            return;
+        }
+
+        setLoadingPDF(true);
+        setError(null);
+
+        try {
+            const response = await axios.get(`http://localhost:3000/exportAttendancePDF/${startDate}/${endDate}`, {
+                responseType: 'blob'
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `attendance_${startDate}_${endDate}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (err) {
+            setError('Error exporting PDF');
+            console.error('Error exporting PDF:', err);
+        } finally {
+            setLoadingPDF(false);
+        }
+    };
 
     return (
         <div className="wrapper max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg">
@@ -49,9 +102,22 @@ const ExportExcel = () => {
                 </div>
                 <button 
                     onClick={handleExport} 
-                    className=" bg-green-600 text-white px-4 py-2 rounded-md text-center flex justify-center items-center m-auto"
+                    className=" bg-green-600 text-white px-4 py-2 rounded-md text-center flex justify-center items-center m-auto mb-[2rem]"
                 >
-                    Export Attendance
+                    Export Attendance in Excel
+                </button>
+                <button 
+                    
+                    className=" bg-blue-600 text-white px-4 py-2 rounded-md text-center flex justify-center items-center m-auto mb-[2rem]"
+                    onClick={handleExportJSON}>
+                    Export Attendance as JSON
+                </button>
+                <button 
+                    
+                    className=" bg-blue-600 text-white px-4 py-2 rounded-md text-center flex justify-center items-center m-auto"
+                    onClick={handleExportPDF}
+                    >
+                    Download Pdf
                 </button>
             </div>
         </div>
