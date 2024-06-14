@@ -1,14 +1,14 @@
 
 import React,{useState,createContext} from 'react'
-import StudentForm from './StudentForm'
-import Faculty from './Faculty'
-import FacultyList from './FacultyList'
-import ShowStudents from './ShowStudents';
+import StudentForm from './StudentForm.jsx'
+import Faculty from './Faculty.jsx'
+import FacultyList from './FacultyList.jsx'
+import ShowStudents from './ShowStudents.jsx';
 import "./App.css"
 export const attendanceContext = createContext()
 import { v4 as uuid } from 'uuid';
-import DisplayStudents from './DisplayStudents';
-import ExportExcel from './ExportExcel';
+import DisplayStudents from './DisplayStudents.jsx';
+import ExportExcel from './ExportExcel.jsx';
 
 
 function App() {
