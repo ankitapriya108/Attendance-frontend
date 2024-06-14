@@ -45,12 +45,12 @@ function Faculty() {
   return (
     <div className="wrapper max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg">
       <h2 className="text-2xl font-bold mb-6 text-center">Add Faculty</h2>
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-4 ml-8">
+      <div >
+        <div className="flex flex-col gap-4 mx-auto">
           {facultyList.map((item, index) => (
             <div key={index} className="">
               <input
-                className="border-gray-400 border-2 rounded px-3 py-1 w-[19rem]"
+                className="border-gray-400 border-2 rounded w-[95%] px-2 py-1 "
                 type="text"
                 placeholder="Add Faculty"
                 value={item.name}

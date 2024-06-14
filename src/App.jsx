@@ -1,6 +1,6 @@
 
 import React,{useState,createContext} from 'react'
-import StudentForm from './src/StudentForm.jsx'
+import StudentForm from './StudentForm.jsx'
 import Faculty from './Faculty.jsx'
 import FacultyList from './FacultyList.jsx'
 import ShowStudents from './ShowStudents.jsx';
@@ -12,7 +12,7 @@ import ExportExcel from './ExportExcel.jsx';
 
 
 function App() {
-// faculty save
+
 const [facultyList, setFacultyList] = useState([{ id: uuid(), name: ""}]);
 
   const [students,setStudents] = useState([{ id: "", name: "", aadharCard: "" }])
