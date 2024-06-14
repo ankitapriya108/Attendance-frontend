@@ -1,6 +1,6 @@
 
 import React,{useState,createContext} from 'react'
-import StudentForm from './StudentForm.jsx'
+import StudentForm from './src/StudentForm.jsx'
 import Faculty from './Faculty.jsx'
 import FacultyList from './FacultyList.jsx'
 import ShowStudents from './ShowStudents.jsx';
