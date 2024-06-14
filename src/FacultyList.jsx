@@ -25,80 +25,51 @@ function FacultyList() {
     fetchFaculties();
   }, []);
 
-  // async function handleDelete(id) {
-  //   try {
-  //     const response = await axios.delete("http:localhost:3000/deleteFaculty/${id}");
-  //     if (response.data === "Faculty Deleted") {
-  //       console.log("Faculty deleted");
-  //       setMessage("Faculty deleted successfully");
-  //       fetchFaculties();
-  //     } else {
-  //       console.log("Failed", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("error", error);
-  //   }
-  // }
-
-//......................................//....................................//
-
-  // async function handleDelete(id) {
-  //   try {
-  //     const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
-  //     if (response.status === 200) {
-  //       console.log("Faculty deleted");
-  //       setMessage("Faculty deleted successfully");
-  //       fetchFaculties();
-  //     } else {
-  //       console.log("Failed to delete", response.data);
-  //       setMessage("Failed to delete faculty.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting faculty:", error);
-  //     setMessage("Error deleting faculty.");
-  //   }
-  // }
-
-
-
-
   const handleDelete = async (id) => {
-    try {
-      // const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
-      const response = await axios.delete("http://localhost:3000/deleteFaculty:id");
-      if (response.status === 200) {
-        console.log('Faculty deleted');
-        setMessage('Faculty deleted successfully');
-        fetchFaculties();
-      } else {
-        console.log('Failed to delete', response.data);
-        setMessage('Failed to delete faculty.');
-      }
-    } catch (error) {
-      console.error('Error deleting faculty:', error);
-      setMessage('Error deleting faculty.');
+  try {
+    const response = await axios.delete(`http://localhost:3000/deleteFaculty/${id}`);
+    
+    if (response.status === 200) {
+      console.log('Faculty deleted');
+      setMessage('Faculty deleted successfully!!!');
+      fetchFaculties();  // Refresh the faculty list
+    } else {
+      console.log('Failed to delete', response.data);
+      setMessage('Failed to delete faculty.');
     }
-  };
-  
+  } catch (error) {
+    console.error('Error deleting faculty:', error);
+    setMessage('Error deleting faculty.');
+  }
+};
+
 
 
   async function handleDeleteMany() {
     try {
+      console.log("Selected Faculty IDs to delete:", selectedFacultyIds); 
+  
       const response = await axios.delete("http://localhost:3000/deleteFacultyMany", {
         data: { ids: selectedFacultyIds },
       });
-      if (response.data === "Faculty Deleted") {
-        console.log("Faculty deleted");
-        setMessage("Faculty deleted successfully!");
+  
+      console.log("Response:", response);  
+  
+      if (response.data === "Faculties Deleted") {
+        console.log("Faculties deleted");
+        setMessage("Faculties deleted successfully!!!");
         setSelectedFacultyIds([]);
         fetchFaculties();
       } else {
-        console.log("Failed to delete faculty:", response.data);
+        console.log("Failed to delete faculties:", response.data);
+        setMessage("Failed to delete faculties.");
       }
     } catch (error) {
-      console.error("Error deleting faculty:", error);
+      console.error("Error deleting faculties:", error);
+      setMessage("Error deleting faculties.");
     }
   }
+  
 
   function handleCheckboxChange(id) {
     if (selectedFacultyIds.includes(id)) {
